@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Сава Вялков — Портфолио</title>
+
+  <!-- Подключение шрифтов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* === Шапка сайта — полностью прозрачная и зафиксированная === */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    .logo-header {
+      font-family: 'Too Many Cowboys Cyrillic', sans-serif;
+      font-size: 36px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .logo-header .first {
+      color: #FFFFFF;
+    }
+
+    .logo-header .second {
+      color: #C7A26B;
+    }
+
+    /* Исправление: центрирование без transform */
+    .nav-menu {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .nav-menu a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #C7A26B;
+    }
+
+    /* Подключение своих шрифтов */
+    @font-face {
+      font-family: 'Too Many Cowboys Cyrillic';
+      src: url('fonts/too-many-cowboys-cyrillic.otf') format('truetype');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Flores del Sol Demo Regular';
+      src: url('fonts/Flores\ del\ Sol.otf') format('truetype');
+      font-display: swap;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Исправление: убираем height: 100% с html */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      background-color: #0C0A09;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Анимация появления */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.animated {
+      opacity: 1;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Верхняя секция */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      background: url('images/IMG_9592.jpg') no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Кнопка */
+    .btn {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 15px 60px;
+      font-size: 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      margin-top: 20px;
+      font-family: Montserrat, sans-serif;
+      font-weight: 500;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Заголовки */
+    .section-title {
+      text-align: left;
+      margin: 80px 0 10px 80px;
+      max-width: 800px;
+    }
+    .title-1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 25pt;
+      color: #C7A26B;
+      margin-bottom: 5px;
+    }
+    .title-2 {
+      font-family: 'Flores del Sol Demo Regular', cursive;
+      font-size: 70pt;
+      color: #FFFFFF;
+    }
+
+    /* Галерея */
+    .gallery {
+      width: 90%;
+      max-width: 100%;
+      margin: 40px auto;
+      column-count: 3;
+      column-gap: 15px;
+      padding: 0 20px;
+    }
+
+    .gallery-item {
+      margin-bottom: 15px;
+      break-inside: avoid;
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .gallery-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: none;
+      color: white;
+      font-size: 14px;
+      font-family: Montserrat, sans-serif;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .caption {
+      opacity: 1;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      z-index: 2;
+    }
+
+    .lightbox-caption {
+      margin-top: 15px;
+      font-family: Montserrat, sans-serif;
+      font-size: 18px;
+      color: #C7A26B;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 3;
+      left: 5%;
+      right: 5%;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #555;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 1;
+    }
+
+    /* === Подвал сайта (в самом низу) === */
+    .footer {
+      background-color: #0C0A09;
+      padding: 60px 40px 40px;
+      margin-top: 60px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+      color: white;
+    }
+
+    .footer-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-name .first {
+      color: #FFFFFF;
+    }
+    .footer-name .second {
+      color: #C7A26B;
+    }
+
+    .footer-bio {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #cbd5e6;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #8a98b0;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav,
+    .footer-contact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-nav li,
+    .footer-contact li {
+      margin-bottom: 14px;
+    }
+
+    .footer-nav a,
+    .footer-contact a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #eef2f8;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .footer-nav a:hover,
+    .footer-contact a:hover {
+      color: #C7A26B;
+      transform: translateX(3px);
+    }
+
+    .footer-contact i {
+      margin-right: 10px;
+      color: #C7A26B;
+      width: 18px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 900px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+      }
+
+      .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-name {
+        white-space: nowrap;
+      }
+
+      .footer-bio {
+        text-align: center;
+        max-width: 400px;
+      }
+    }
+
+    /* Адаптивность основного контента */
+    @media (max-width: 1024px) {
+      .gallery { column-count: 2; }
+      .logo-header { font-size: 32px; }
+      .section-title { margin-left: 40px; }
+    }
+    @media (max-width: 768px) {
+      .gallery { column-count: 2; }
+      .logo-header { font-size: 28px; }
+      .section-title { margin-left: 30px; }
+      .title-1 { font-size: 20pt; }
+      .title-2 { font-size: 50pt; }
+      .nav-menu { gap: 30px; }
+    }
+    @media (max-width: 480px) {
+      .gallery { column-count: 1; }
+      .logo-header { font-size: 26px; }
+      .btn { padding: 15px 40px; font-size: 16px; }
+      .section-title { margin-left: 20px; }
+      .title-1 { font-size: 18pt; }
+      .title-2 { font-size: 40pt; }
+      .lightbox-nav { width: 80%; left: 10%; right: 10%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="logo-header">
+      <span class="first">Сава</span><span class="second">Вялков</span>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="#portfolio">Портфолио</a></li>
+        <li><a href="about.html">Обо мне</a></li>
+        <li><a href="contact.html">Контакты</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Главный экран -->
+  <section class="hero">
+    <a href="#portfolio" class="btn fade-in">Смотреть портфолио</a>
+  </section>
+
+  <!-- Заголовки -->
+  <div class="section-title fade-in">
+    <div class="title-1">Избранные работы</div>
+    <div class="title-2">Лучшие кадры</div>
+  </div>
+
+  <!-- Галерея -->
+  <div class="gallery" id="portfolio">
+    <div class="gallery-item" data-title="Mansory 1">
+      <img src="images/IMG_9592.jpg" alt="Mansory">
+      <div class="caption">Mansory 1</div>
+    </div>
+    <div class="gallery-item" data-title="Supercar">
+      <img src="images/IMG_9603.jpg" alt="Supercar">
+      <div class="caption">Supercar</div>
+    </div>
+    <div class="gallery-item" data-title="Tuning">
+      <img src="images/IMG_9614.jpg" alt="Tuning">
+      <div class="caption">Tuning</div>
+    </div>
+    <div class="gallery-item" data-title="Details">
+      <img src="images/IMG_9653.jpg" alt="Details">
+      <div class="caption">Детали</div>
+    </div>
+    <div class="gallery-item" data-title="Interior">
+      <img src="images/IMG_9675.jpg" alt="Interior">
+      <div class="caption">Интерьер</div>
+    </div>
+    <div class="gallery-item" data-title="Street">
+      <img src="images/IMG_9688.jpg" alt="Street">
+      <div class="caption">На улице</div>
+    </div>
+    <div class="gallery-item" data-title="Night">
+      <img src="images/IMG_9701.jpg" alt="Night">
+      <div class="caption">Ночная съёмка</div>
+    </div>
+    <div class="gallery-item" data-title="Wheels">
+      <img src="images/IMG_9712.jpg" alt="Wheels">
+      <div class="caption">Колёса</div>
+    </div>
+    <div class="gallery-item" data-title="Headlights">
+      <img src="images/IMG_9725.jpg" alt="Headlights">
+      <div class="caption">Фары</div>
+    </div>
+    <div class="gallery-item" data-title="Luxury">
+      <img src="images/IMG_9740.jpg" alt="Luxury">
+      <div class="caption">Роскошь</div>
+    </div>
+    <div class="gallery-item" data-title="Road">
+      <img src="images/IMG_9755.jpg" alt="Road">
+      <div class="caption">В путь</div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="close-lightbox" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-nav">
+      <button class="nav-btn" id="prev-btn">‹</button>
+      <button class="nav-btn" id="next-btn">›</button>
+    </div>
+    <img src="" alt="Full image" class="lightbox-img" id="lightbox-img">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- Подвал сайта (в самом низу) -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Левая колонка -->
+      <div class="footer-column">
+        <div class="footer-name">
+          <span class="first">САВА</span><span class="second"> ВЯЛКОВ</span>
+        </div>
+        <p class="footer-bio">
+          Снимаю портреты, пейзажи и уличную жизнь.<br>
+          Базируюсь в Москве.
+        </p>
+      </div>
+
+      <!-- Средняя колонка -->
+      <div class="footer-column">
+        <h3 class="footer-title">Навигация</h3>
+        <ul class="footer-nav">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="#portfolio">Портфолио</a></li>
+          <li><a href="about.html">Обо мне</a></li>
+          <li><a href="contact.html">Контакты</a></li>
+        </ul>
+      </div>
+
+      <!-- Правая колонка -->
+      <div class="footer-column">
+        <h3 class="footer-title">Связаться</h3>
+        <ul class="footer-contact">
+          <li>
+            <i class="fa-brands fa-telegram"></i>
+            <a href="https://t.me/savavyalkov">Telegram</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:jbanson08@gmail.com">jbanson08@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Анимация появления при прокрутке
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          if (entry.target.classList.contains('gallery-item')) {
+            entry.target.classList.add('visible');
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in, .gallery-item').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Lightbox
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    let currentIndex;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      const item = galleryItems[index];
+      lightboxImg.src = item.querySelector('img').src;
+      lightboxCaption.textContent = item.dataset.title;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      updateLightbox(currentIndex);
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateLightbox(currentIndex);
+    }
+
+    function updateLightbox(index) {
+      const item = galleryItems[index];
+      lightboxImg.src = item.querySelector('img').src;
+      lightboxCaption.textContent = item.dataset.title;
+    }
+
+    galleryItems.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(index));
+    });
+
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    // Закрытие по Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+
+    // Закрытие по клику вне фото
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('close-lightbox')) {
+        closeLightbox();
+      }
+    });
+
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+  </script>
+</body>
+</html>
