@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Портфолио — Сава Вялков | Фотографии</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      overflow-x: hidden;
+      background-color: #0C0A09;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+    }
+
+    .logo-header {
+      font-family: 'Too Many Cowboys Cyrillic', sans-serif;
+      font-size: 36px;
+      display: flex;
+      gap: 8px;
+    }
+    .logo-header .first { color: #FFFFFF; }
+    .logo-header .second { color: #C7A26B; }
+
+    .nav-menu {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .nav-menu a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #C7A26B;
+    }
+
+    @font-face {
+      font-family: 'Too Many Cowboys Cyrillic';
+      src: url('../fonts/too-many-cowboys-cyrillic.otf') format('truetype');
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Flores del Sol Demo Regular';
+      src: url('/fonts/flores-del-sol-demo-regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ===== HERO ===== */
+    .hero-portfolio {
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      background-color: #0C0A09;
+      padding-top: 80px;
+    }
+
+    .hero-portfolio h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 25pt;
+      color: #C7A26B;
+      margin-bottom: 10px;
+    }
+
+    .hero-portfolio h2 {
+      font-family: 'Flores del Sol Demo Regular', cursive;
+      font-size: 70pt;
+      font-weight: normal;
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+
+    .divider {
+      height: 1px;
+      width: 90%;
+      max-width: 1200px;
+      margin: 15px auto 40px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    /* ===== ФИЛЬТРЫ ===== */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 20px auto 50px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .filter-btn {
+      font-size: 16px;
+      color: #aaa;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: relative;
+      padding: 6px 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #C7A26B;
+      transition: width 0.3s ease;
+    }
+
+    .filter-btn:hover::after,
+    .filter-btn.active::after {
+      width: 100%;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: #C7A26B;
+    }
+
+    /* ===== MASONRY GALLERY ===== */
+    .gallery {
+      column-count: 3;
+      column-gap: 24px;
+      width: 100%;
+      padding: 0 24px;
+      margin: 0 auto 80px;
+      transition: opacity 0.25s ease;
+    }
+
+    .gallery.fade-transition {
+      opacity: 0.6;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 24px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.2s ease;
+      background-color: #1a1715;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform: scale(1);
+      opacity: 1;
+      animation: galleryItemFadeIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+    }
+
+    @keyframes galleryItemFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .gallery-item.animate-reappear {
+      animation: galleryItemFadeIn 0.45s ease-out forwards;
+    }
+
+    /* Запрещаем правый клик и перетаскивание на изображениях */
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      will-change: transform;
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;  /* клик проходит к родителю, правый клик заблокирован */
+      -webkit-touch-callout: none;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.6);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.02);
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      pointer-events: none;
+      z-index: 2;
+      background: none !important;
+      backdrop-filter: none !important;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .gallery-item:hover .photo-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item.hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .gallery {
+        column-count: 2;
+        column-gap: 20px;
+        padding: 0 20px;
+      }
+      .hero-portfolio h2 {
+        font-size: 52pt;
+      }
+      .nav-menu {
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery {
+        column-count: 1;
+        padding: 0 16px;
+      }
+      .hero-portfolio h1 {
+        font-size: 24pt;
+      }
+      .hero-portfolio h2 {
+        font-size: 38pt;
+      }
+      .filters {
+        gap: 28px;
+        flex-wrap: wrap;
+      }
+      .photo-caption {
+        font-size: 12px;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+      }
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background-color: #0C0A09;
+      padding: 60px 40px 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+      color: white;
+    }
+
+    .footer-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-name .first { color: #FFFFFF; }
+    .footer-name .second { color: #C7A26B; }
+
+    .footer-bio {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #cbd5e6;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #8a98b0;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav,
+    .footer-contact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-nav li,
+    .footer-contact li {
+      margin-bottom: 14px;
+    }
+
+    .footer-nav a,
+    .footer-contact a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #eef2f8;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .footer-nav a:hover,
+    .footer-contact a:hover {
+      color: #C7A26B;
+      transform: translateX(3px);
+    }
+
+    .footer-contact i {
+      margin-right: 10px;
+      color: #C7A26B;
+      width: 18px;
+    }
+
+    /* ===== LIGHTBOX (стрелки подальше, защита) ===== */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.96);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(6px);
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 95vw;
+      max-height: 90vh;
+    }
+
+    .lightbox-image-wrapper {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+    }
+
+    .lightbox-img {
+      display: block;
+      max-width: 90vw;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.2), 0 0 0 2px rgba(255, 255, 255, 0.08);
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.25));
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* Запрет контекстного меню на фото в лайтбоксе */
+    .lightbox-img {
+      pointer-events: none;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(20, 20, 20, 0.85);
+      backdrop-filter: blur(8px);
+      color: #f0f0f0;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 60px;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 2002;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn:hover {
+      background: #C7A26B;
+      color: #0C0A09;
+      border-color: #C7A26B;
+    }
+
+    .prev {
+      left: -85px;
+    }
+    .next {
+      right: -85px;
+    }
+
+    .close-lightbox {
+      position: fixed;
+      top: 28px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(25, 25, 25, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e0e0e0;
+      font-size: 28px;
+      font-weight: 300;
+      cursor: pointer;
+      z-index: 2001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      line-height: 1;
+    }
+
+    .close-lightbox:hover {
+      background: #C7A26B;
+      color: #0C0A09;
+      border-color: #C7A26B;
+    }
+
+    .lightbox-caption {
+      margin-top: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #C7A26B;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      padding: 10px 24px;
+      border-radius: 60px;
+      text-align: center;
+      max-width: 85vw;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(199, 162, 107, 0.4);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 1000px) {
+      .prev { left: -70px; }
+      .next { right: -70px; }
+    }
+    @media (max-width: 900px) {
+      .prev { left: -60px; }
+      .next { right: -60px; }
+      .nav-btn { width: 46px; height: 46px; font-size: 24px; }
+    }
+    @media (max-width: 700px) {
+      .prev { left: -50px; }
+      .next { right: -50px; }
+      .nav-btn { width: 40px; height: 40px; font-size: 20px; }
+    }
+    @media (max-width: 550px) {
+      .prev { left: -40px; }
+      .next { right: -40px; }
+      .nav-btn { width: 36px; height: 36px; font-size: 18px; }
+    }
+    @media (max-width: 600px) {
+      .close-lightbox {
+        top: 16px;
+        right: 18px;
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+      }
+      .lightbox-caption {
+        font-size: 13px;
+        padding: 8px 18px;
+      }
+    }
+    @media (max-width: 480px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+      }
+      .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer-bio {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-header">
+    <span class="first">Сава</span><span class="second">Вялков</span>
+  </div>
+  <nav>
+    <ul class="nav-menu">
+      <li><a href="/main/index.html">Главная</a></li>
+      <li><a href="/portfolio/index.html" class="active">Портфолио</a></li>
+      <li><a href="../about.html">Обо мне</a></li>
+      <li><a href="../contact.html">Контакты</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero-portfolio">
+  <h1>ПОРТФОЛИО</h1>
+  <h2>Мои работы</h2>
+</section>
+
+<div class="divider"></div>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">Все</button>
+  <button class="filter-btn" data-filter="people">Люди</button>
+  <button class="filter-btn" data-filter="not-people">Не люди</button>
+</div>
+
+<div class="gallery" id="portfolio-gallery">
+  <!-- Люди -->
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_9592.jpg" alt="Москва. Черно-белая, но яркая. 29.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Черно-белая, но яркая. 29.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_9495.jpg" alt="Москва. Оранжевый труд. 20.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Оранжевый труд. 20.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_7561.jpg" alt="Москва. Любовь в цветах. 07.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Любовь в цветах. 07.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_8350.jpg" alt="Москва. Отцы и дети. 05.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Отцы и дети. 05.02.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_8844.jpg" alt="Москва. Мужчина на лежаке. 12.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Мужчина на лежаке. 12.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_3234.JPG" alt="Москва. Три на три. 29.11.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Три на три. 29.11.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_7275.jpg" alt="Москва. Черный на красном. 26.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Черный на красном. 26.02.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_7722.jpg" alt="Москва. Для кого-то. 07.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Для кого-то. 07.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_8052.jpg" alt="Москва. Наблюдатель. 08.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Наблюдатель. 08.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_8506.jpg" alt="Москва. Не к кому ехать. 12.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Не к кому ехать. 12.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_8721.jpg" alt="Москва. Любовь со спины. 12.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Любовь со спины. 12.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_2559.jpg" alt="Москва. Масляная картина. 27.10.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Масляная картина. 27.10.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_4979.jpg" alt="Москва. В рамках. 21.12.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. В рамках. 21.12.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6292.jpg" alt="Москва. Ещё зеленый. 20.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Ещё зеленый. 20.01.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6349.jpg" alt="Москва. В темноте. 25.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. В темноте. 25.01.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_2871_1 (1).JPG" alt="Москва. Шпион. 01.11.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Шпион. 01.11.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_3281.JPG" alt="Москва. Подчиненные. 29.11.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Подчиненные. 29.11.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_5181.jpg" alt="Москва. За пультом. 21.12.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. За пультом. 21.12.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_5557.jpg" alt="Санкт-Петербург. За забором. 01.01.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Санкт-Петербург. За забором. 01.01.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_5696.jpg" alt="Санкт-Петербург. Дед Мороз. 01.01.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Санкт-Петербург. Дед Мороз. 01.01.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_5781.jpg" alt="Санкт-Петербург. Веселый разговор. 01.01.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Санкт-Петербург. Веселый разговор. 01.01.2025</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6123.jpg" alt="Москва. Хранитель времени. 20.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Хранитель времени. 20.01.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6148 (1).jpg" alt="Москва. Музыкант. 20.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Музыкант. 20.01.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6657 (1).jpg" alt="Москва. Хранительница книг. 11.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Хранительница книг. 11.02.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6731.jpg" alt="Москва. Снеговик. 11.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Снеговик. 11.02.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_6747.jpg" alt="Москва. Зимний киоск. 11.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Зимний киоск. 11.02.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_8533.jpg" alt="Москва. На воде. 12.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. На воде. 12.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_7588.jpg" alt="Москва. 8 марта, Рижский. 07.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. 8 марта, Рижский. 07.03.2026</div></div>
+  <div class="gallery-item" data-category="people"><img src="images2/IMG_7784.jpg" alt="Москва. Много любви. 07.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Много любви. 07.03.2026</div></div>
+
+  <!-- Не люди -->
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_9002.jpg" alt="Хорлово. Остались только имена. 19.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Хорлово. Остались только имена. 19.03.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_6196 (1).jpg" alt="Москва. без / опасность. 20.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. без / опасность. 20.01.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_6326.jpg" alt="Москва. Свет в конце. 20.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Свет в конце. 20.01.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_7038.jpg" alt="Москва. Приятного аппетита. 18.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Приятного аппетита. 18.02.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_4647.jpg" alt="Москва. Страх. 21.12.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Страх. 21.12.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_2423.jpg" alt="Москва. Дворец в джунглях. 27.10.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Дворец в джунглях. 27.10.2025</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_3613.jpg" alt="Москва. Великая победа. 29.11.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Великая победа. 29.11.2025</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_4252.jpg" alt="Москва. По наклонной. 18.12.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. По наклонной. 18.12.2025</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_4268.jpg" alt="Москва. Москва. 18.12.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Москва. 18.12.2025</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_4393.jpg" alt="Москва. Один путь. 18.12.2025" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Один путь. 18.12.2025</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_5872.jpg" alt="Белоозёрский. Домики. 07.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Белоозёрский. Домики. 07.01.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_5962.jpg" alt="Белоозёрский. Разнообразие. 07.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Белоозёрский. Разнообразие. 07.01.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_6980.jpg" alt="Москва. Ермоген. 18.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Ермоген. 18.02.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_8692.jpg" alt="Москва. Красный март. 12.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Красный март. 12.03.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_3289.JPG" alt="Москва. Машина времени. 29.11.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Машина времени. 29.11.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_5972.jpg" alt="Белоозёрский. Нога-неведимка. 07.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Белоозёрский. Нога-неведимка. 07.01.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_6607.jpg" alt="Москва. Подъезд в Бибирево. 07.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Подъезд в Бибирево. 07.02.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_6402 (1).jpg" alt="Москва. Золотые купола. 05.02.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Золотые купола. 05.02.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_8477.jpg" alt="Москва. Храм Христа Спасителя. 12.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Храм Христа Спасителя. 12.03.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_5731.jpg" alt="Санкт-Петербург. Укротитель коня. 01.01.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Санкт-Петербург. Укротитель коня. 01.01.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_9614.jpg" alt="Москва. На такси в церковь. 29.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. На такси в церковь. 29.03.2026</div></div>
+  <div class="gallery-item" data-category="not-people"><img src="images2/IMG_9425.jpg" alt="Москва. Чужой среди своих. 20.03.2026" draggable="false" oncontextmenu="return false"><div class="photo-caption">Москва. Чужой среди своих. 20.03.2026</div></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <div class="footer-name"><span class="first">САВА</span><span class="second"> ВЯЛКОВ</span></div>
+      <p class="footer-bio">Снимаю портреты, пейзажи и уличную жизнь.<br>Базируюсь в Москве.</p>
+    </div>
+    <div class="footer-column">
+      <h3 class="footer-title">Навигация</h3>
+      <ul class="footer-nav">
+        <li><a href="../index.html">Главная</a></li>
+        <li><a href="./">Портфолио</a></li>
+        <li><a href="../about.html">Обо мне</a></li>
+        <li><a href="../contact.html">Контакты</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3 class="footer-title">Связаться</h3>
+      <ul class="footer-contact">
+        <li><i class="fa-brands fa-telegram"></i> <a href="https://t.me/savavyalkov">Telegram</a></li>
+        <li><i class="fa-solid fa-envelope"></i> <a href="mailto:jbanson08@gmail.com">jbanson08@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const gallery = document.getElementById('portfolio-gallery');
+    const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+
+    function filterGallery(filterValue) {
+      gallery.classList.add('fade-transition');
+      setTimeout(() => {
+        galleryItems.forEach(item => {
+          const category = item.getAttribute('data-category');
+          const shouldHide = (filterValue !== 'all' && category !== filterValue);
+          if (shouldHide) {
+            item.classList.add('hidden');
+          } else {
+            if (item.classList.contains('hidden')) {
+              item.classList.remove('hidden');
+              item.classList.add('animate-reappear');
+              setTimeout(() => item.classList.remove('animate-reappear'), 500);
+            }
+          }
+        });
+        gallery.classList.remove('fade-transition');
+      }, 80);
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterGallery(btn.getAttribute('data-filter'));
+        updateVisibleItemsCache();
+      });
+    });
+
+    // LIGHTBOX
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('lightbox');
+    lightbox.innerHTML = `
+      <button class="close-lightbox" aria-label="Закрыть">✕</button>
+      <div class="lightbox-content">
+        <div class="lightbox-image-wrapper">
+          <img class="lightbox-img" alt="полноэкранный режим" draggable="false" oncontextmenu="return false">
+          <button class="nav-btn prev" aria-label="Предыдущее"><i class="fas fa-chevron-left"></i></button>
+          <button class="nav-btn next" aria-label="Следующее"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="lightbox-caption"></div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('.lightbox-img');
+    const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+    const closeLb = lightbox.querySelector('.close-lightbox');
+    const prevBtn = lightbox.querySelector('.prev');
+    const nextBtn = lightbox.querySelector('.next');
+
+    let currentVisible = [];
+    let currentIdx = 0;
+
+    function updateVisibleItemsCache() {
+      currentVisible = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+    }
+
+    function openLightbox(item) {
+      const img = item.querySelector('img');
+      const captionText = img.getAttribute('alt') || 'Без названия';
+      lightboxImg.src = img.src;
+      lightboxCaption.textContent = captionText;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      updateVisibleItemsCache();
+      currentIdx = currentVisible.indexOf(item);
+      if (currentIdx === -1) currentIdx = 0;
+    }
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(item);
+      });
+    });
+
+    function showCurrentLightboxImage() {
+      if (!currentVisible.length) return;
+      const currentItem = currentVisible[currentIdx];
+      if (currentItem) {
+        const imgEl = currentItem.querySelector('img');
+        lightboxImg.src = imgEl.src;
+        lightboxCaption.textContent = imgEl.getAttribute('alt') || 'Фотография';
+      }
+    }
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentVisible.length === 0) return;
+      currentIdx = (currentIdx - 1 + currentVisible.length) % currentVisible.length;
+      showCurrentLightboxImage();
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentVisible.length === 0) return;
+      currentIdx = (currentIdx + 1) % currentVisible.length;
+      showCurrentLightboxImage();
+    });
+
+    closeLb.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      } else if (e.key === 'ArrowLeft') prevBtn.click();
+      else if (e.key === 'ArrowRight') nextBtn.click();
+    });
+
+    updateVisibleItemsCache();
+    galleryItems.forEach(item => {
+      item.classList.add('animate-reappear');
+      setTimeout(() => item.classList.remove('animate-reappear'), 500);
+    });
+  })();
+</script>
+</body>
+</html>
