@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Портфолио — Сава Вялков</title>
+
+  <!-- Подключение шрифтов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* === Шапка сайта — прозрачная и зафиксированная === */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    .logo-header {
+      font-family: 'Too Many Cowboys Cyrillic', sans-serif;
+      font-size: 36px;
+      display: flex;
+      gap: 8px;
+    }
+    .logo-header .first { color: #FFFFFF; }
+    .logo-header .second { color: #C7A26B; }
+
+    /* Центрирование меню без transform */
+    .nav-menu {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .nav-menu a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #C7A26B;
+    }
+
+    /* Подключение своих шрифтов */
+    @font-face {
+      font-family: 'Too Many Cowboys Cyrillic';
+      src: url('../fonts/too-many-cowboys-cyrillic.otf') format('truetype');
+      font-display: swap;
+    }
+@font-face {
+  font-family: 'Flores del Sol Demo Regular';
+  src: url('../../Flores del Sol.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #0C0A09;
+    }
+
+    /* Верхняя секция портфолио */
+    .hero-portfolio {
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      background-color: #0C0A09;
+      padding-top: 80px; /* Учитываем фиксированную шапку */
+    }
+
+    .hero-portfolio h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400; /* Regular */
+  font-size: 25pt;
+  color: #C7A26B;
+  margin-bottom: 10px;
+}
+
+.hero-portfolio h2 {
+  font-family: 'Flores del Sol Demo Regular', cursive;
+  font-size: 70pt;
+  color: #FFFFFF;
+}
+
+    /* Разделитель */
+    .divider {
+      height: 1px;
+      width: 90%;
+      max-width: 1200px;
+      margin: 60px auto 40px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    /* Фильтры */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 20px auto 50px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .filter-btn {
+      font-size: 16px;
+      color: #aaa;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: #C7A26B;
+    }
+
+    /* Галерея */
+    .gallery {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto 80px;
+      column-count: 3;
+      column-gap: 20px;
+      padding: 0 10px;
+    }
+
+    .gallery-item {
+      margin-bottom: 20px;
+      break-inside: avoid;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Скрытие при фильтрации */
+    .gallery-item.hidden {
+      display: none;
+    }
+
+    /* Подвал сайта */
+    .footer {
+      background-color: #0C0A09;
+      padding: 60px 40px 40px;
+      margin-top: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+      color: white;
+    }
+
+    .footer-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-name .first { color: #FFFFFF; }
+    .footer-name .second { color: #C7A26B; }
+
+    .footer-bio {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #cbd5e6;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #8a98b0;
+      margin-bottom: 20px;
+    }
+
+    .footer-nav,
+    .footer-contact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-nav li,
+    .footer-contact li {
+      margin-bottom: 14px;
+    }
+
+    .footer-nav a,
+    .footer-contact a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #eef2f8;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .footer-nav a:hover,
+    .footer-contact a:hover {
+      color: #C7A26B;
+      transform: translateX(3px);
+    }
+
+    .footer-contact i {
+      margin-right: 10px;
+      color: #C7A26B;
+      width: 18px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 1024px) {
+      .gallery { column-count: 2; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-portfolio h1 { font-size: 30pt; }
+      .hero-portfolio h2 { font-size: 40pt; }
+      .filters { gap: 30px; }
+      .filter-btn { font-size: 15px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery { column-count: 1; }
+      .filters { flex-wrap: wrap; gap: 20px; }
+      .hero-portfolio h1 { font-size: 24pt; }
+      .hero-portfolio h2 { font-size: 32pt; }
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+      }
+      .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="logo-header">
+      <span class="first">Сава</span><span class="second">Вялков</span>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="../index.html">Главная</a></li>
+        <li><a href="./" class="active">Портфолио</a></li>
+        <li><a href="../about.html">Обо мне</a></li>
+        <li><a href="../contact.html">Контакты</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Верхняя секция портфолио -->
+  <section class="hero-portfolio">
+    <h1>ПОРТФОЛИО</h1>
+    <h2>Мои работы</h2>
+  </section>
+
+  <!-- Разделитель -->
+  <div class="divider"></div>
+
+  <!-- Фильтры -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Все</button>
+    <button class="filter-btn" data-filter="people">Люди</button>
+    <button class="filter-btn" data-filter="not-people">Не люди</button>
+  </div>
+
+  <!-- Галерея -->
+  <div class="gallery" id="portfolio-gallery">
+    <!-- Люди -->
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_5731.jpg" alt="Санкт-Петербург. Укротитель коня.">
+    </div>
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_9495.jpg" alt="Москва. Оранжевый труд.">
+    </div>
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_2559.jpg" alt="Москва. Масляная краска.">
+    </div>
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_4647 (1).jpg" alt="Москва. Страх.">
+    </div>
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_6196 (1).jpg" alt="Москва. без / опасность.">
+    </div>
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_6148 (1).jpg" alt="Москва. Музыкант.">
+    </div>
+    <div class="gallery-item" data-category="people">
+      <img src="../images/IMG_6657 (1).jpg" alt="Москва. Хранительница книг.">
+    </div>
+
+    <!-- Не люди -->
+    <div class="gallery-item" data-category="not-people">
+      <img src="../images/IMG_6402.jpg" alt="Москва. Золотые купола.">
+    </div>
+    <div class="gallery-item" data-category="not-people">
+      <img src="../images/IMG_7411.jpg" alt="Москва. Багратион.">
+    </div>
+    <div class="gallery-item" data-category="not-people">
+      <img src="../images/IMG_8477.jpg" alt="Москва. Храм Христа Спасителя.">
+    </div>
+    <div class="gallery-item" data-category="not-people">
+      <img src="../images/IMG_8350.jpg" alt="Москва. Отцы и дети.">
+    </div>
+  </div>
+
+  <!-- Подвал сайта -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Левая колонка -->
+      <div class="footer-column">
+        <div class="footer-name">
+          <span class="first">САВА</span><span class="second"> ВЯЛКОВ</span>
+        </div>
+        <p class="footer-bio">
+          Снимаю портреты, пейзажи и уличную жизнь.<br>
+          Базируюсь в Москве.
+        </p>
+      </div>
+
+      <!-- Средняя колонка -->
+      <div class="footer-column">
+        <h3 class="footer-title">Навигация</h3>
+        <ul class="footer-nav">
+          <li><a href="../index.html">Главная</a></li>
+          <li><a href="./">Портфолио</a></li>
+          <li><a href="../about.html">Обо мне</a></li>
+          <li><a href="../contact.html">Контакты</a></li>
+        </ul>
+      </div>
+
+      <!-- Правая колонка -->
+      <div class="footer-column">
+        <h3 class="footer-title">Связаться</h3>
+        <ul class="footer-contact">
+          <li>
+            <i class="fa-brands fa-telegram"></i>
+            <a href="https://t.me/savavyalkov">Telegram</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:jbanson08@gmail.com">jbanson08@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Фильтрация галереи
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gallery-item');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Активная кнопка
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filter = button.getAttribute('data-filter');
+
+        items.forEach(item => {
+          if (filter === 'all') {
+            item.classList.remove('hidden');
+          } else {
+            if (item.getAttribute('data-category') === filter) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          }
+        });
+      });
+    });
+
+    // Lightbox (опционально — можно подключить из главной)
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('lightbox');
+    lightbox.innerHTML = `
+      <button class="close-lightbox">×</button>
+      <img src="" alt="Full image" class="lightbox-img">
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('.lightbox-img');
+    const closeBtn = lightbox.querySelector('.close-lightbox');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        lightboxImg.src = item.querySelector('img').src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+
+  <style>
+    /* Стили для Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+    .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #555;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1001;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</body>
+</html>
