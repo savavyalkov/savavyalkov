@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* === Шапка сайта — фиксированная, меню по центру === */
+    /* === Шапка сайта === */
     .header {
       position: fixed;
       top: 0;
@@ -23,7 +23,6 @@
       justify-content: space-between;
       align-items: center;
       background-color: transparent;
-      flex-wrap: wrap;
     }
 
     .logo-header {
@@ -31,22 +30,26 @@
       font-size: 36px;
       display: flex;
       gap: 8px;
+      position: relative;
+      z-index: 2;
     }
     .logo-header .first { color: #FFFFFF; }
     .logo-header .second { color: #C7A26B; }
 
-    /* Центрирование меню (как в исходном варианте) */
+    /* Меню — абсолютное центрирование */
+    nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
     .nav-menu {
       display: flex;
       gap: 40px;
       list-style: none;
       margin: 0;
       padding: 0;
-      position: absolute;
-      left: 0;
-      right: 0;
-      width: fit-content;
-      margin: 0 auto;
     }
 
     .nav-menu a {
@@ -56,6 +59,7 @@
       font-size: 16px;
       font-weight: 500;
       transition: color 0.3s ease;
+      white-space: nowrap;
     }
     .nav-menu a:hover,
     .nav-menu a.active {
@@ -365,7 +369,7 @@
       width: 18px;
     }
 
-    /* === Адаптивность: на планшетах и телефонах меню не абсолютное, чтобы не ломалось === */
+    /* === Адаптивность === */
     @media (max-width: 1024px) {
       .gallery { column-count: 2; }
       .logo-header { font-size: 32px; }
@@ -376,18 +380,20 @@
       .header {
         padding: 15px 20px;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
       }
-      /* Убираем абсолютное позиционирование на мобильных, центрируем через flex */
-      .nav-menu {
+      /* На мобильных убираем абсолютное позиционирование меню, чтобы оно не наезжало */
+      nav {
         position: static;
-        width: auto;
-        margin: 0;
+        transform: none;
+      }
+      .nav-menu {
         justify-content: center;
-        gap: 30px;
+        gap: 25px;
+        flex-wrap: wrap;
       }
       .logo-header { font-size: 28px; }
-      .nav-menu a { font-size: 14px; }
+      .nav-menu a { font-size: 14px; white-space: nowrap; }
       .section-title { margin-left: 30px; margin-top: 60px; }
       .title-1 { font-size: 20pt; }
       .title-2 { font-size: 50pt; }
@@ -427,7 +433,7 @@
 </head>
 <body>
 
-  <!-- Шапка с меню по центру (на десктопе — абсолютное центрирование, на мобильных — flex) -->
+  <!-- Шапка с меню, центрированным через transform -->
   <header class="header">
     <div class="logo-header">
       <span class="first">Сава</span><span class="second">Вялков</span>
@@ -442,7 +448,7 @@
     </nav>
   </header>
 
-  <!-- Hero с кнопкой, ведущей на портфолио -->
+  <!-- Hero с кнопкой на портфолио -->
   <section class="hero">
     <a href="portfolio.html" class="btn fade-in">Смотреть портфолио</a>
   </section>
